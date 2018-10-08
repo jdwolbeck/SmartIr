@@ -1,0 +1,22 @@
+﻿DROP Table SensorData
+Drop table SensorDataDetail
+GO
+Create Table SensorData
+(
+	SensorData_ID		INT				Identity,
+	UniqueID					VARCHAR(100),
+	Transmitter_ID		VARCHAR(100),
+	IP_Address			VARCHAR(50),
+	Created_On			DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT Q_SensorData_SensorData_ID_00001 PRIMARY KEY(SensorData_ID)
+)
+
+Create Table SensorDataDetail
+(
+	SensorDataDetail_ID	INT				Identity,
+	UniqueID					VARCHAR(100),
+	SensorNode			VARCHAR(100),
+	SensorValue			VARCHAR(4000),
+	Created_On			DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT Q_SensorDataDetail_SensorDataDetail_ID_00001 PRIMARY KEY(SensorDataDetail_ID)
+)
