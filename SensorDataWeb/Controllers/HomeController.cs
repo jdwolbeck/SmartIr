@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SensorDataWeb.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Data.SqlClient;
 
 namespace SensorDataWeb.Controllers
 {
@@ -12,6 +15,31 @@ namespace SensorDataWeb.Controllers
     {
         public IActionResult Index()
         {
+            SqlServerConnHelp sqlConnManager = new SqlServerConnHelp();
+            SqlConnection sqlConnection = sqlConnManager.GetConnection(@"DELL-SVR\SQLEXPRESS", "SensorData", "jdw", "asdf");
+            //SqlConnection sqlConnection = sqlConnManager.GetConnection(@"LAPTOP-AD2UF7HI\SQLEXPRESS", "SensorData", "jdw", "asdf");
+            string query = "Select * from SensorData";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            var reader = cmd.ExecuteReader();
+            List<SensorDataFields> db = new List<SensorDataFields>();
+
+            while(reader.Read())
+            {
+                SensorDataFields row = new SensorDataFields();
+                row.Id = reader.GetInt32(0);
+                row.UniqueId = reader.GetString(1).Trim();
+                row.TransmissionId = reader.GetString(2).Trim();
+                row.IpAddress = reader.GetString(3).Trim();
+                row.date = reader.GetDateTime(4);
+                db.Add(row);
+            }
+
+            reader.Close();
+            cmd.Dispose();
+            sqlConnection.Close();
+            sqlConnection.Dispose();
+
+            ViewData["SensorDataFields"] = db;
             return View();
         }
 

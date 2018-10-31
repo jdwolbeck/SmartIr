@@ -44,10 +44,10 @@ namespace SensorDataWeb.Controllers
             SqlServerConnHelp sqlConnManager = new SqlServerConnHelp();
 
             //Use to connect to server
-            //SqlConnection sqlConnection = sqlConnManager.GetConnection("SensorData.tk", "SensorData", "jdw", "asdf");
+            SqlConnection sqlConnection = sqlConnManager.GetConnection(@"DELL-SVR\SQLEXPRESS", "SensorData", "jdw", "asdf");
             
             //Use to connect to my laptop
-            SqlConnection sqlConnection = sqlConnManager.GetConnection(@"LAPTOP-AD2UF7HI\SQLEXPRESS", "SensorData", "jdw", "asdf");
+            //SqlConnection sqlConnection = sqlConnManager.GetConnection(@"LAPTOP-AD2UF7HI\SQLEXPRESS", "SensorData", "jdw", "asdf");
 
             //Used to insert data into the first database *SensorData*
             //Insert data:: Insert Into Table (Column A, Column B) Values (Value A, Value B)
